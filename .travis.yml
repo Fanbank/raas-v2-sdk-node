@@ -1,10 +1,10 @@
 language: node_js
 node_js:
-  - "4.5"
+  - "12"
 # command to install dependencies
 install: npm install
 script:
-    # command to run linter
+  # command to run linter
   - npm run lint
     # command to run tests
   - npm test
