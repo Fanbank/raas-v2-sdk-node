@@ -1,10 +1,11 @@
 language: node_js
+dist: jammy
 node_js:
-  - "4.5"
+  - 'lts/*'
 # command to install dependencies
 install: npm install
 script:
-    # command to run linter
+  # command to run linter
   - npm run lint
     # command to run tests
   - npm test
