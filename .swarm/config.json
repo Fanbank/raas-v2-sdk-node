@@ -1,0 +1,102 @@
+{
+  "repo": "raas-v2-sdk-node",
+  "description": "Auto-generated Node.js client SDK for the Tango Card RaaS v2 REST API. Covers catalogs, orders, accounts, customers, credit cards, deposits, exchange rates, and system status. Used by main-api as the 'raas' npm package.",
+  "stack": ["JavaScript", "Node.js", "request", "winston", "moment", "Mocha", "Chai"],
+  "legacy": true,
+  "generator": "APIMatic v2.0 (auto-generated for Tango Card, Inc.)",
+  "processes": [
+    {
+      "id": "api_controllers",
+      "name": "API Controllers",
+      "files": [
+        "lib/Controllers/AccountsController.js",
+        "lib/Controllers/CatalogController.js",
+        "lib/Controllers/CustomersController.js",
+        "lib/Controllers/ExchangeRatesController.js",
+        "lib/Controllers/FundController.js",
+        "lib/Controllers/OrdersController.js",
+        "lib/Controllers/StatusController.js",
+        "lib/Controllers/BaseController.js"
+      ],
+      "dependencies": ["request", "winston", "configuration.js", "APIHelper.js", "BaseController.js"],
+      "inputs": ["platformName, platformKey, request parameters"],
+      "outputs": ["Typed model instances (AccountModel, OrderModel, etc.), Promise/callback results"]
+    },
+    {
+      "id": "models",
+      "name": "Request/Response Models",
+      "files": [
+        "lib/Models/BaseModel.js",
+        "lib/Models/AccountModel.js",
+        "lib/Models/AccountSummaryModel.js",
+        "lib/Models/BillingAddressModel.js",
+        "lib/Models/BrandModel.js",
+        "lib/Models/CatalogModel.js",
+        "lib/Models/CreateAccountRequestModel.js",
+        "lib/Models/CreateCreditCardRequestModel.js",
+        "lib/Models/CreateCustomerRequestModel.js",
+        "lib/Models/CreateOrderRequestModel.js",
+        "lib/Models/CreditCardModel.js",
+        "lib/Models/CurrencyBreakdownModel.js",
+        "lib/Models/CustomerModel.js",
+        "lib/Models/DepositRequestModel.js",
+        "lib/Models/DepositResponseModel.js",
+        "lib/Models/ExchangeRateModel.js",
+        "lib/Models/ExchangeRateResponseModel.js",
+        "lib/Models/FullNameEmailModel.js",
+        "lib/Models/GetDepositResponseModel.js",
+        "lib/Models/GetOrdersResponseModel.js",
+        "lib/Models/ItemModel.js",
+        "lib/Models/NameEmailModel.js",
+        "lib/Models/NewCreditCardModel.js",
+        "lib/Models/OrderModel.js",
+        "lib/Models/OrderSummaryModel.js",
+        "lib/Models/PageModel.js",
+        "lib/Models/RaasClientErrorModel.js",
+        "lib/Models/RaasServerErrorModel.js",
+        "lib/Models/ResendOrderResponseModel.js",
+        "lib/Models/RewardCredentialModel.js",
+        "lib/Models/RewardModel.js",
+        "lib/Models/SystemStatusResponseModel.js",
+        "lib/Models/UnregisterCreditCardRequestModel.js",
+        "lib/Models/UnregisterCreditCardResponseModel.js"
+      ],
+      "dependencies": ["moment", "APIHelper.js"],
+      "inputs": ["Raw JSON from API responses or request params"],
+      "outputs": ["Typed model instances with field validation and toJSON() serialization"]
+    },
+    {
+      "id": "http_client_config",
+      "name": "HTTP Client & Configuration",
+      "files": [
+        "lib/Http/Client/RequestClient.js",
+        "lib/Http/Client/HttpContext.js",
+        "lib/Http/Request/HttpRequest.js",
+        "lib/Http/Response/HttpResponse.js",
+        "lib/configuration.js",
+        "lib/Environments.js",
+        "lib/Servers.js",
+        "lib/APIHelper.js",
+        "lib/LogConfig.js"
+      ],
+      "dependencies": ["request", "winston"],
+      "inputs": ["HTTP options object (URL, method, headers, body, auth)"],
+      "outputs": ["HttpResponse with statusCode, headers, body; HttpContext pairing request+response"]
+    },
+    {
+      "id": "exceptions_mapping",
+      "name": "Exceptions & Object Mapping",
+      "files": [
+        "lib/Exceptions/APIException.js",
+        "lib/Exceptions/RaasClientException.js",
+        "lib/Exceptions/RaasServerException.js",
+        "lib/Exceptions/RaasGenericException.js",
+        "lib/ObjectMapper.js",
+        "lib/ModelFactory.js"
+      ],
+      "dependencies": ["moment", "ModelFactory.js"],
+      "inputs": ["Raw JSON API response bodies, model name strings"],
+      "outputs": ["Typed exception instances (RaasClientException, RaasServerException, RaasGenericException), deserialized model instances"]
+    }
+  ]
+}
