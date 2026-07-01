@@ -13,7 +13,7 @@ This repo has 4 processes. Detailed documentation for each one is in `.swarm/doc
 
 ### 2. Request/Response Models
 - **What it does:** Plain JavaScript classes representing every request body and response shape from the RaaS API. Each model declares its field mapping via `mappingInfo()` and supports serialization via `toJSON()`.
-- **Files:** `lib/Models/` (28 model files), `lib/Models/BaseModel.js`
+- **Files:** `lib/Models/` (33 model files), `lib/Models/BaseModel.js`
 - **Detailed docs:** `.swarm/docs/models.md`
 
 ### 3. HTTP Client & Configuration
@@ -39,7 +39,7 @@ This repo has 4 processes. Detailed documentation for each one is in `.swarm/doc
 
 ## Legacy Status
 
-This is a **legacy, auto-generated SDK**. It is installed by `main-api` as `"raas": "github:Fanbank/raas-v2-sdk-node#master"` and consumed through `src/datasources/tango.js` in that repo. There is no active development history and the code should be treated as read-only vendor code unless a Tango Card API change requires regenerating or patching it.
+This is a **legacy, auto-generated SDK**. It is installed by `main-api` as `"raas": "github:Fanbank/raas-v2-sdk-node#master"` and consumed through `server/datasources/tango.js` in that repo. There is no active development history and the code should be treated as read-only vendor code unless a Tango Card API change requires regenerating or patching it.
 
 ## Instructions for Claude
 

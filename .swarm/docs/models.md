@@ -18,7 +18,7 @@ The Models process defines the complete set of JavaScript classes that represent
 
 **Request models** (caller-constructed, sent to API):
 - `CreateOrderRequestModel`: `accountIdentifier`, `amount`, `utid`, `customerIdentifier`, `sendEmail`, `recipient` (NameEmailModel), `sender` (NameEmailModel), `externalRefID`, `campaign`, `emailSubject`, `message`, `notes`, `etid`
-- `CreateAccountRequestModel`: `accountIdentifier`, `displayName`, `currencyCode`, `contactEmail`
+- `CreateAccountRequestModel`: `accountIdentifier`, `displayName`, `contactEmail`
 - `CreateCustomerRequestModel`: customer identifier and contact fields
 - `CreateCreditCardRequestModel`: card registration fields (billing address, card details via `BillingAddressModel`, `NewCreditCardModel`)
 - `DepositRequestModel`: account funding fields (accountIdentifier, amount, creditCardToken)
@@ -26,12 +26,12 @@ The Models process defines the complete set of JavaScript classes that represent
 
 **Response models** (returned from API, deserialized by ObjectMapper):
 - `OrderModel`: full order record including nested `CurrencyBreakdownModel` (amountCharged, denomination, marginShare), `NameEmailModel` (sender, recipient), `RewardModel` (reward credentials), datetime `createdAt`
-- `AccountModel`: account record with `currencyCode` defaulting to `'USD'`, datetime `createdAt`
+- `AccountModel`: account record with a `currencyCode` field (the `'USD'` default passed to `getValue` is never applied, since `getValue` returns `null` for null/undefined input before considering `defaultValue`), datetime `createdAt`
 - `AccountSummaryModel`: lighter account view (returned in list operations)
 - `CustomerModel`: customer identifier and metadata
 - `CatalogModel`: `catalogName` + `brands` array of `BrandModel`
 - `BrandModel`: brand metadata + `items` array of `ItemModel`
-- `ItemModel`: individual reward product within a brand (utid, denomination, redemption type)
+- `ItemModel`: individual reward product within a brand (utid, rewardName, valueType, rewardType, minValue, maxValue, faceValue, currencyCode)
 - `CreditCardModel`: registered credit card details
 - `DepositResponseModel` / `GetDepositResponseModel`: deposit record details
 - `ExchangeRateResponseModel`: wrapper containing `ExchangeRateModel[]`
@@ -42,7 +42,7 @@ The Models process defines the complete set of JavaScript classes that represent
 - `RewardCredentialModel`: individual credential entry with `label`, `value`, `type`, `credentialType`
 - `CurrencyBreakdownModel`: monetary value with `value`, `currencyCode`, `total`
 - `NameEmailModel` / `FullNameEmailModel`: name and email pair for sender/recipient
-- `PageModel`: pagination metadata (page, elementsPerBlock, totalCount)
+- `PageModel`: pagination metadata (number, elementsPerBlock, resultCount, totalCount)
 - `OrderSummaryModel`: lightweight order record for list views
 - `RaasClientErrorModel` / `RaasServerErrorModel`: structured error entries inside exception responses
 
@@ -50,7 +50,7 @@ The Models process defines the complete set of JavaScript classes that represent
 
 - **mappingInfo():** Every model class defines a static `mappingInfo()` method returning an array of field descriptor objects. Each descriptor has: `name` (JS property name), `realName` (JSON key), and optionally `type` (nested model class name), `array` (boolean), `isDateTime` (boolean), `dateTimeValue` (format string). This metadata drives both `ObjectMapper.mapFields()` deserialization and `BaseModel.toJSON()` serialization.
 - **discriminatorMap():** All concrete models define this as an empty object `{}`. The discriminator mechanism in `ObjectMapper` exists to support polymorphic model hierarchies (where a field value selects a subclass) but is not actively used in this SDK.
-- **BaseModel.getValue():** Used in constructors to safely assign field values, returning `null` for undefined/null inputs. The `currencyCode` default on `AccountModel` demonstrates the optional `defaultValue` parameter.
+- **BaseModel.getValue():** Used in constructors to safely assign field values, returning `null` for undefined/null inputs. It accepts an optional `defaultValue` parameter, but that parameter is dead code — `getValue` returns `null` on null/undefined input before ever reaching it, so the `currencyCode` `'USD'` default on `AccountModel` is never applied.
 - **toJSON():** Produces a plain object suitable for JSON serialization, correctly handling nested models, arrays, datetime fields (converted back to strings), and skipping undefined values.
 - **Auto-generated:** All model files contain the header `This file was automatically generated for Tango Card, Inc. by APIMATIC v2.0`. Their field lists exactly mirror the Tango Card API spec at the time of generation and should not be hand-edited.
 
@@ -81,7 +81,7 @@ The Models process defines the complete set of JavaScript classes that represent
 | `lib/Models/RewardCredentialModel.js` | Single reward credential (label, value, type, credentialType) |
 | `lib/Models/CurrencyBreakdownModel.js` | Monetary value with currency code and total |
 | `lib/Models/NameEmailModel.js` | Name+email pair (sender/recipient) |
-| `lib/Models/FullNameEmailModel.js` | Full name (firstName, lastName) + email |
+| `lib/Models/FullNameEmailModel.js` | Single `fullName` + `emailAddress` pair |
 | `lib/Models/CreditCardModel.js` | Registered credit card details |
 | `lib/Models/NewCreditCardModel.js` | New credit card data for registration |
 | `lib/Models/CreateCreditCardRequestModel.js` | Credit card registration request body |

@@ -103,7 +103,6 @@ raas.configuration.currentEnvironment = raas.Environments.PRODUCTION;
 |-------|------|----------|-------------|
 | `accountIdentifier` | string | Yes | Unique identifier for the new account |
 | `displayName` | string | Yes | Human-readable name |
-| `currencyCode` | string | No | ISO currency code (default: USD) |
 | `contactEmail` | string | No | Account contact email |
 
 ---
@@ -239,5 +238,5 @@ mocha --recursive
 cd test/Controllers && mocha OrdersControllerTest
 
 # Increase timeout (default comes from TestBootstrap TESTTIMEOUT)
-# Edit configuration.js TESTTIMEOUT parameter
+# Edit the TEST_TIMEOUT value in test/TestBootstrap.js
 ```

@@ -16,7 +16,7 @@ Because this is auto-generated code, it should be treated as **vendor code**. Ma
 
 - **What it does:** Exposes the full RaaS v2 API surface as static methods on seven resource-specific ES6 classes. Each method constructs the HTTP request (URL, headers, Basic Auth credentials), sends it via the HTTP client, and deserializes the response into a typed model instance. Both callback and Promise interfaces are supported simultaneously.
 - **Why it exists:** Provides the calling application with a clean, typed JavaScript interface to the Tango Card REST API without dealing with raw HTTP, URL encoding, or JSON deserialization manually.
-- **How it is used:** The caller imports the SDK (`require('raas')`), sets credentials in `configuration.js`, then calls static methods directly (e.g., `OrdersController.createOrder(body, callback)`). In `main-api`, the datasource at `src/datasources/tango.js` calls these methods to issue gift card orders and query accounts.
+- **How it is used:** The caller imports the SDK (`require('raas')`), sets credentials in `configuration.js`, then calls static methods directly (e.g., `OrdersController.createOrder(body, callback)`). In `main-api`, the datasource at `server/datasources/tango.js` calls these methods to issue gift card orders and query accounts.
 - **Data it handles:**
   - Input: Typed request models (e.g., `CreateOrderRequestModel`) or primitive identifiers (strings, dates).
   - Output: Typed response models (e.g., `OrderModel`, `AccountModel`) or typed exceptions (`RaasClientException`, `RaasServerException`).
@@ -53,7 +53,7 @@ Because this is auto-generated code, it should be treated as **vendor code**. Ma
 ## General System Flow
 
 ```
-main-api (src/datasources/tango.js)
+main-api (server/datasources/tango.js)
     |
     | require('raas') + set configuration.platformName / platformKey
     v
@@ -109,6 +109,6 @@ RequestClient sends HTTP request (Basic Auth)
 - **28+ model classes** covering all request/response shapes including nested value types.
 - **Dual interface**: every controller method supports both Node.js callback style and Promise style simultaneously.
 - **Two environments**: SANDBOX (test credentials, fake money) and PRODUCTION (real credentials, real money). The default configuration in the repo is SANDBOX — this is intentional for safety.
-- **Consumed by main-api** as `"raas": "github:Fanbank/raas-v2-sdk-node#master"` via `src/datasources/tango.js`. This is the only known Plink consumer of this SDK.
+- **Consumed by main-api** as `"raas": "github:Fanbank/raas-v2-sdk-node#master"` via `server/datasources/tango.js`. This is the only known Plink consumer of this SDK.
 - **Legacy status**: No active development. Treat as read-only vendor code unless a Tango Card API change forces a patch or full regeneration via APIMatic.
 - **Test suite**: Integration tests in `test/Controllers/` hit the real SANDBOX API using hardcoded test identifiers (`sdkautotest1`, `sdkautotest2`, etc.). Tests are not mocked and require a live Tango Card sandbox connection.
